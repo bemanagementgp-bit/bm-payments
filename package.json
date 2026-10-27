@@ -1,0 +1,8 @@
+{
+  "name": "bm-payments",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mercado Pago payments + stateless licensing service for Be Management Tools (Vercel serverless, zero dependencies)",
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node test/license.test.js", "dev": "vercel dev" }
+}
