@@ -1,4 +1,4 @@
-const { json, body } = require('../lib/http');
+const { json, body, securityHeaders, rateLimit } = require('../lib/http');
 const { APPS, BUNDLE } = require('../catalog');
 const mp = require('../lib/mp');
 const { makeKey } = require('../lib/license');
@@ -10,12 +10,15 @@ const { sendLicenseEmail } = require('../lib/mail');
  * We don't store anything: on an approved payment we (optionally) e-mail the license key. Always answers 200 fast.
  */
 module.exports = async (req, res) => {
+  securityHeaders(res);
   if (req.method !== 'POST') return json(res, 405, { error: 'POST only' });
+  if (rateLimit(req, res, { limit: 120, bucket: 'webhook' })) return;
   const q = req.query || {};
   const b = body(req);
   const type = q.type || q.topic || b.type || b.action || '';
   const dataId = (q['data.id'] || (b.data && b.data.id) || q.id || b.id || '').toString();
 
+  if (dataId && !/^[A-Za-z0-9-]{1,64}$/.test(dataId)) return json(res, 400, { error: 'Bad id' });
   if (!mp.verifyWebhookSignature(req, dataId)) return json(res, 401, { error: 'Invalid signature' });
   if (!dataId) return json(res, 200, { ok: true, ignored: 'no id' });
 

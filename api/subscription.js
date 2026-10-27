@@ -9,7 +9,7 @@ const { makeKey, parseKey } = require('../lib/license');
 module.exports = handler(async (req, res) => {
   if (req.method === 'GET') {
     const id = String(req.query.preapproval_id || req.query.id || '');
-    if (!id) return json(res, 400, { error: 'preapproval_id required' });
+    if (!/^[A-Za-z0-9]{10,64}$/.test(id)) return json(res, 400, { error: 'preapproval_id required' });
     const s = await mp.getPreapproval(id);
     const out = { id: s.id, status: s.status, next_payment_date: s.next_payment_date, reason: s.reason };
     if (s.status === 'authorized') out.key = makeKey('all', 's', s.id);

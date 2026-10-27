@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node test/license.test.js",
+    "test": "node test/license.test.js && node test/security.test.js",
     "dev": "vercel dev"
   },
   "dependencies": {
