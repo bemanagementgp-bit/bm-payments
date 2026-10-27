@@ -17,6 +17,7 @@ const APPS = {
   framelab:       { title: 'Frame Lab Pro',          ars: 9900,  url: 'https://framelab-tool.vercel.app' },
   sizeconverter:  { title: 'Size Converter Pro',     ars: 9900,  url: 'https://sizeconverter-tool.vercel.app' },
   giveaway:       { title: 'Giveaway Picker Pro',    ars: 9900,  url: 'https://giveaway-tool.vercel.app' },
+  iplookup:       { title: 'IP Lookup Pro',          ars: 9900,  url: 'https://iplookup-tool.vercel.app' },
 };
 
 // One-time bundle: unlocks every app (license app = "all")
